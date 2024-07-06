@@ -6,37 +6,80 @@ using namespace std;
 
 void Number_Guessing_game()
 {
-    int num;
-    int guess;
-    int traies = 050;
+      int num, guess, tries;
+    char menuChoice, playAgain;
 
-    srand(time (NULL) );
-    num=(rand() %100 + 1);
-
-    cout<< "******** NUMBER GUESSING GAME ***********"<<endl;
+    srand(static_cast<unsigned int>(time(0)));  // Seed the random number generator
 
     do
     {
-        cout<<"Enter a guess between (1 to 100) : "<<endl;
-        cin>>guess;
-        traies++;
+        // Display menu
+        cout << "NUMBER GUESSING GAME" << endl;
+        cout << "************************" << endl;
+        cout << "1. Start New Game" << endl;
+        cout << "2. Instructions" << endl;
+        cout << "3. Exit" << endl;
+        cout << "Enter your choice: ";
+        cin >> menuChoice;
 
-        if(guess > num)
+        switch (menuChoice)
         {
-            cout<<"Too High ! "<<endl;
-        }
-        else if(guess < num )
-        {
-            cout<<"Too low ! "<<endl;
-        }
-        else
-        {
-            cout<<"CORRECT ! #Your Guessing number is : "<<num<<endl;
+            case '1':  // Start new game
+                do
+                {
+                    num = rand() % 100 + 1;
+                    tries = 0;
+                    cout << "******** NUMBER GUESSING GAME ***********" << endl;
+
+                    do
+                    {
+                        cout << "Enter a guess between 1 and 100: ";
+                        cin >> guess;
+                        tries++;
+
+                        if (guess > num)
+                        {
+                            cout << "Too High!" << endl;
+                        }
+                        else if (guess < num)
+                        {
+                            cout << "Too Low!" << endl;
+                        }
+                        else
+                        {
+                            cout << "CORRECT! Your guessing number is: " << num << endl;
+                            cout << "You guessed it in " << num <<endl;
+                        }
+
+                    } while (guess != num);
+
+                    cout << "******************************************" << endl;
+
+                    cout << "Do you want to play again? (y/n): ";
+                    cin >> playAgain;
+
+                } while (tolower(playAgain) == 'y');
+                cout << "Thank you for playing!" << endl;
+                break;
+
+            case '2':  // Instructions
+                cout << "Instructions:" << endl;
+                cout << "1. The computer will randomly select a number between 1 and 100." << endl;
+                cout << "2. You need to guess the number." << endl;
+                cout << "3. After each guess, the computer will tell you if your guess is too high, too low, or correct." << endl;
+                cout << "4. You can play multiple rounds until you decide to stop." << endl;
+                break;
+
+            case '3':  // Exit
+                cout << "Exiting the program. Goodbye!" << endl;
+                break;
+
+            default:
+                cout << "Invalid choice. Please try again." << endl;
+                break;
         }
 
-    }while(guess != num);
-
-    cout<<"******************************************"<<endl;
+    } while (menuChoice != '3');
 
 }
 
@@ -280,6 +323,7 @@ void Tic_Tac_Toe_Game()
  
 int main()
 {
-    Rock_Paper_Scissors_Game();
+    //Rock_Paper_Scissors_Game();
     //Tic_Tac_Toe_Game();
+    Number_Guessing_game();
 }
