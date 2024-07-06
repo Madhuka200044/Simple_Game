@@ -42,79 +42,117 @@ void Number_Guessing_game()
 
 void Rock_Paper_Scissors_Game()
 {
-    char userChoice, playAgain;
+    
+    char userChoice, playAgain, menuChoice;
     string userChoiceStr, computerChoiceStr;
     int computerChoice;
-
-    cout << "ROCK-PAPER-SCISSORS GAME" << endl;
-    cout << "************************" << endl;
-
+    
     srand(static_cast<unsigned int>(time(0)));  // Seed the random number generator
 
     do
     {
-        // Get user's choice
-        do
+        // Display menu
+        cout << "ROCK-PAPER-SCISSORS GAME" << endl;
+        cout << "************************" << endl;
+        cout << "1. Start New Game" << endl;
+        cout << "2. Instructions" << endl;
+        cout << "3. Exit" << endl;
+        cout << "Enter your choice: ";
+        cin >> menuChoice;
+
+        switch (menuChoice)
         {
-            cout << "Choose one of the following:" << endl;
-            cout << "'R' for Rock" << endl;
-            cout << "'P' for Paper" << endl;
-            cout << "'S' for Scissors" << endl;
-            cout << "Enter your choice: ";
-            cin >> userChoice;
+            case '1':  // Start new game
+                do
+                {
+                    // Get user's choice
+                    do
+                    {
+                        
+                        cout << "************************" << endl;
+                        cout << "Choose one of the following:" << endl;
+                        cout << "'R' for Rock" << endl;
+                        cout << "'P' for Paper" << endl;
+                        cout << "'S' for Scissors" << endl;
+                        cout << "Enter your choice: ";
+                        cin >> userChoice;
 
-            userChoice = tolower(userChoice);
+                        userChoice = tolower(userChoice);
 
-            if (userChoice != 'r' && userChoice != 'p' && userChoice != 's')
-            {
-                cout << "Invalid choice! Please try again." << endl;
-            }
-        } while (userChoice != 'r' && userChoice != 'p' && userChoice != 's');
+                        if (userChoice != 'r' && userChoice != 'p' && userChoice != 's')
+                        {
+                            cout << "Invalid choice! Please try again." << endl;
+                        }
+                    } while (userChoice != 'r' && userChoice != 'p' && userChoice != 's');
 
-        // Map user choice to string
-        switch (userChoice)
-        {
-            case 'r': userChoiceStr = "Rock"; break;
-            case 'p': userChoiceStr = "Paper"; break;
-            case 's': userChoiceStr = "Scissors"; break;
+                    // Map user choice to string
+                    switch (userChoice)
+                    {
+                        case 'r': userChoiceStr = "Rock"; break;
+                        case 'p': userChoiceStr = "Paper"; break;
+                        case 's': userChoiceStr = "Scissors"; break;
+                    }
+
+                    // Generate computer's choice
+                    computerChoice = rand() % 3;
+                    switch (computerChoice)
+                    {
+                        case 0: computerChoiceStr = "Rock"; break;
+                        case 1: computerChoiceStr = "Paper"; break;
+                        case 2: computerChoiceStr = "Scissors"; break;
+                    }
+
+                    // Display choices
+                    cout << "You chose: " << userChoiceStr << endl;
+                    cout << "Computer chose: " << computerChoiceStr << endl;
+
+                    // Determine the winner
+                    if (userChoiceStr == computerChoiceStr)
+                    {
+                        cout << "It's a tie!" << endl;
+                    }
+                    else if ((userChoiceStr == "Rock" && computerChoiceStr == "Scissors") ||
+                             (userChoiceStr == "Paper" && computerChoiceStr == "Rock") ||
+                             (userChoiceStr == "Scissors" && computerChoiceStr == "Paper"))
+                    {
+                        cout << "You win!" << endl;
+                    }
+                    else
+                    {
+                        cout << "Computer wins!" << endl;
+                    }
+
+                    // Ask if the user wants to play again
+                    cout << "Do you want to play again? (y/n): ";
+                    cin >> playAgain;
+
+                } while (tolower(playAgain) == 'y');
+                cout << "Thank you for playing!" << endl;
+                break;
+
+            case '2':  // Instructions
+                cout << "Instructions:" << endl;
+                cout << "1. The game is played against the computer." << endl;
+                cout << "2. You can choose Rock, Paper, or Scissors." << endl;
+                cout << "3. The rules are as follows:" << endl;
+                cout << "   - Rock beats Scissors" << endl;
+                cout << "   - Scissors beats Paper" << endl;
+                cout << "   - Paper beats Rock" << endl;
+                cout << "4. If both choices are the same, it’s a tie." << endl;
+                cout << "5. You can play multiple rounds." << endl;
+                break;
+
+            case '3':  // Exit
+                cout << "Exiting the program. Goodbye!" << endl;
+                break;
+
+            default:
+                cout << "Invalid choice. Please try again." << endl;
+                break;
         }
 
-        // Generate computer's choice
-        computerChoice = rand() % 3;
-        switch (computerChoice)
-        {
-            case 0: computerChoiceStr = "Rock"; break;
-            case 1: computerChoiceStr = "Paper"; break;
-            case 2: computerChoiceStr = "Scissors"; break;
-        }
+    } while (menuChoice != '3');
 
-        // Display choices
-        cout << "You chose: " << userChoiceStr << endl;
-        cout << "Computer chose: " << computerChoiceStr << endl;
-
-        // Determine the winner
-        if (userChoiceStr == computerChoiceStr)
-        {
-            cout << "It's a tie!" << endl;
-        }
-        else if ((userChoiceStr == "Rock" && computerChoiceStr == "Scissors") ||
-                 (userChoiceStr == "Paper" && computerChoiceStr == "Rock") ||
-                 (userChoiceStr == "Scissors" && computerChoiceStr == "Paper"))
-        {
-            cout << "You win!" << endl;
-        }
-        else
-        {
-            cout << "Computer wins!" << endl;
-        }
-
-        // Ask if the user wants to play again
-        cout << "Do you want to play again? (y/n): ";
-        cin >> playAgain;
-
-    } while (tolower(playAgain) == 'y');
-
-    cout << "Thank you for playing!" << endl;
 }
 
 
@@ -242,6 +280,6 @@ void Tic_Tac_Toe_Game()
  
 int main()
 {
-    
-    Tic_Tac_Toe_Game();2
+    Rock_Paper_Scissors_Game();
+    //Tic_Tac_Toe_Game();
 }
