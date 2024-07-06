@@ -320,10 +320,26 @@ void Tic_Tac_Toe_Game()
     } while (menuChoice != '3');
 }
 
+
+void showMainMenu()
+{ 
+   cout << "****************************"<<endl;
+   cout << "****************************"<<endl;
+   cout << "----WELLCOME TO GAME WORLD----"
+   cout << "****************************"<<endl;
+   cout << "****************************"<<endl;
+
+    cout << "=== MAIN MENU ===" << endl;
+    cout << "1. Number Guessing Game" << endl;
+    cout << "2. Rock-Paper-Scissors Game" << endl;
+    cout << "3. Tic-Tac-Toe Game" << endl;
+    cout << "4. Exit" << endl;
+    cout << "Enter your choice: ";
+
+}    
+
  
 int main()
 {
-    //Rock_Paper_Scissors_Game();
-    //Tic_Tac_Toe_Game();
-    Number_Guessing_game();
+    
 }
