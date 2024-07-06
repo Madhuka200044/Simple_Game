@@ -325,7 +325,7 @@ void showMainMenu()
 { 
    cout << "****************************"<<endl;
    cout << "****************************"<<endl;
-   cout << "----WELLCOME TO GAME WORLD----"
+   cout << "----WELLCOME TO GAME WORLD----"<<endl;
    cout << "****************************"<<endl;
    cout << "****************************"<<endl;
 
@@ -341,5 +341,31 @@ void showMainMenu()
  
 int main()
 {
-    
+     char choice;
+
+    do {
+        showMainMenu();
+        cin >> choice;
+
+        switch (choice) {
+            case '1':
+                Number_Guessing_game();
+                break;
+            case '2':
+                Rock_Paper_Scissors_Game();
+                break;
+            case '3':
+                Tic_Tac_Toe_Game();
+                break;
+            case '4':
+                cout << "Exiting the program. Goodbye!" << endl;
+                break;
+            default:
+                cout << "Invalid choice. Please try again." << endl;
+                break;
+        }
+
+    } while (choice != '4');
+
+    return 0;
 }
