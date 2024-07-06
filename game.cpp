@@ -117,9 +117,90 @@ void Rock_Paper_Scissors_Game()
     cout << "Thank you for playing!" << endl;
 }
 
+void ticTacToeGame()
+{
+    char board[3][3] = { {'1', '2', '3'}, {'4', '5', '6'}, {'7', '8', '9'} };
+    char player = 'X';
+    int choice;
+    bool isWin = false;
+
+    auto displayBoard = [&]() {
+        cout << "     |     |     " << endl;
+        cout << "  " << board[0][0] << "  |  " << board[0][1] << "  |  " << board[0][2] << "  " << endl;
+        cout << "_____|_____|_____" << endl;
+        cout << "     |     |     " << endl;
+        cout << "  " << board[1][0] << "  |  " << board[1][1] << "  |  " << board[1][2] << "  " << endl;
+        cout << "_____|_____|_____" << endl;
+        cout << "     |     |     " << endl;
+        cout << "  " << board[2][0] << "  |  " << board[2][1] << "  |  " << board[2][2] << "  " << endl;
+        cout << "     |     |     " << endl;
+    };
+
+    auto checkWin = [&]() -> bool {
+        // Check rows
+        for (int i = 0; i < 3; i++)
+            if (board[i][0] == board[i][1] && board[i][1] == board[i][2])
+                return true;
+
+        // Check columns
+        for (int i = 0; i < 3; i++)
+            if (board[0][i] == board[1][i] && board[1][i] == board[2][i])
+                return true;
+
+        // Check diagonals
+        if (board[0][0] == board[1][1] && board[1][1] == board[2][2])
+            return true;
+        if (board[0][2] == board[1][1] && board[1][1] == board[2][0])
+            return true;
+
+        return false;
+    };
+
+    auto isDraw = [&]() -> bool {
+        for (int i = 0; i < 3; i++)
+            for (int j = 0; j < 3; j++)
+                if (board[i][j] != 'X' && board[i][j] != 'O')
+                    return false;
+        return true;
+    };
+
+    cout << "Welcome to Tic-Tac-Toe!" << endl;
+    while (!isWin && !isDraw())
+    {
+        displayBoard();
+        cout << "Player " << player << ", enter your move (1-9): ";
+        cin >> choice;
+
+        // Map choice to board coordinates
+        int row = (choice - 1) / 3;
+        int col = (choice - 1) % 3;
+
+        // Check if the move is valid
+        if (choice < 1 || choice > 9 || board[row][col] == 'X' || board[row][col] == 'O')
+        {
+            cout << "Invalid move. Try again." << endl;
+            continue;
+        }
+
+        board[row][col] = player;
+
+        // Check for win or draw
+        isWin = checkWin();
+        if (!isWin)
+            player = (player == 'X') ? 'O' : 'X';  // Switch player
+    }
+
+    displayBoard();
+    if (isWin)
+        cout << "Player " << player << " wins!" << endl;
+    else
+        cout << "It's a draw!" << endl;
+}
+
   
 int main()
 {
     //Number_Guessing_game();
-    Rock_Paper_Scissors_Game();
-}
+    //Rock_Paper_Scissors_Game();
+    ticTacToeGame();
+}6
