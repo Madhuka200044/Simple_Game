@@ -117,37 +117,40 @@ void Rock_Paper_Scissors_Game()
     cout << "Thank you for playing!" << endl;
 }
 
-void ticTacToeGame()
+
+
+void Tic_Tac_Toe_Game()
 {
-    char board[3][3] = { {'1', '2', '3'}, {'4', '5', '6'}, {'7', '8', '9'} };
-    char player = 'X';
-    int choice;
-    bool isWin = false;
+    char board[3][3];
+    char player;
+    bool isWin, isDraw;
+    char menuChoice;
+    
+    auto initializeBoard = [&]() {
+        char initChar = '1';
+        for (int i = 0; i < 3; i++)
+            for (int j = 0; j < 3; j++)
+                board[i][j] = initChar++;
+    };
 
     auto displayBoard = [&]() {
         cout << "     |     |     " << endl;
-        cout << "  " << board[0][0] << "  |  " << board[0][1] << "  |  " << board[0][2] << "  " << endl;
-        cout << "_____|_____|_____" << endl;
-        cout << "     |     |     " << endl;
-        cout << "  " << board[1][0] << "  |  " << board[1][1] << "  |  " << board[1][2] << "  " << endl;
-        cout << "_____|_____|_____" << endl;
-        cout << "     |     |     " << endl;
-        cout << "  " << board[2][0] << "  |  " << board[2][1] << "  |  " << board[2][2] << "  " << endl;
+        for (int i = 0; i < 3; i++) {
+            cout << "  " << board[i][0] << "  |  " << board[i][1] << "  |  " << board[i][2] << "  " << endl;
+            if (i < 2) cout << "_____|_____|_____" << endl << "     |     |     " << endl;
+        }
         cout << "     |     |     " << endl;
     };
 
     auto checkWin = [&]() -> bool {
-        // Check rows
         for (int i = 0; i < 3; i++)
             if (board[i][0] == board[i][1] && board[i][1] == board[i][2])
                 return true;
 
-        // Check columns
         for (int i = 0; i < 3; i++)
             if (board[0][i] == board[1][i] && board[1][i] == board[2][i])
                 return true;
 
-        // Check diagonals
         if (board[0][0] == board[1][1] && board[1][1] == board[2][2])
             return true;
         if (board[0][2] == board[1][1] && board[1][1] == board[2][0])
@@ -156,7 +159,7 @@ void ticTacToeGame()
         return false;
     };
 
-    auto isDraw = [&]() -> bool {
+    auto isBoardFull = [&]() -> bool {
         for (int i = 0; i < 3; i++)
             for (int j = 0; j < 3; j++)
                 if (board[i][j] != 'X' && board[i][j] != 'O')
@@ -164,43 +167,81 @@ void ticTacToeGame()
         return true;
     };
 
-    cout << "Welcome to Tic-Tac-Toe!" << endl;
-    while (!isWin && !isDraw())
-    {
-        displayBoard();
-        cout << "Player " << player << ", enter your move (1-9): ";
-        cin >> choice;
+    auto playGame = [&]() {
+        initializeBoard();
+        player = 'X';
+        isWin = false;
+        isDraw = false;
 
-        // Map choice to board coordinates
-        int row = (choice - 1) / 3;
-        int col = (choice - 1) % 3;
-
-        // Check if the move is valid
-        if (choice < 1 || choice > 9 || board[row][col] == 'X' || board[row][col] == 'O')
+        cout << "Starting a new game of Tic-Tac-Toe!" << endl;
+        while (!isWin && !isBoardFull())
         {
-            cout << "Invalid move. Try again." << endl;
-            continue;
+            displayBoard();
+            int choice;
+            cout << "Player " << player << ", enter your move (1-9): ";
+            cin >> choice;
+
+            int row = (choice - 1) / 3;
+            int col = (choice - 1) % 3;
+
+            if (choice < 1 || choice > 9 || board[row][col] == 'X' || board[row][col] == 'O')
+            {
+                cout << "Invalid move. Try again." << endl;
+                continue;
+            }
+
+            board[row][col] = player;
+            isWin = checkWin();
+            if (!isWin)
+                player = (player == 'X') ? 'O' : 'X';
         }
 
-        board[row][col] = player;
+        displayBoard();
+        if (isWin)
+            cout << "Player " << player << " wins!" << endl;
+        else
+            cout << "It's a draw!" << endl;
+    };
 
-        // Check for win or draw
-        isWin = checkWin();
-        if (!isWin)
-            player = (player == 'X') ? 'O' : 'X';  // Switch player
-    }
+    auto showInstructions = [&]() {
+        cout << "Instructions:" << endl;
+        cout << "1. The game is played on a 3x3 grid." << endl;
+        cout << "2. Player 1 is 'X' and Player 2 is 'O'." << endl;
+        cout << "3. Players take turns putting their marks in an empty cell." << endl;
+        cout << "4. The first player to get 3 of their marks in a row (up, down, across, or diagonally) wins." << endl;
+        cout << "5. If all 9 cells are filled and no player has 3 in a row, the game is a draw." << endl;
+    };
 
-    displayBoard();
-    if (isWin)
-        cout << "Player " << player << " wins!" << endl;
-    else
-        cout << "It's a draw!" << endl;
+    do {
+        cout << "WELCOME TO TIC-TAC-TOE" << endl;
+        cout << "**********************" << endl;
+        cout << "1. New Game" << endl;
+        cout << "2. Instructions" << endl;
+        cout << "3. Exit" << endl;
+        cout << "Enter your choice: ";
+        cin >> menuChoice;
+
+        switch (menuChoice)
+        {
+            case '1':
+                playGame();
+                break;
+            case '2':
+                showInstructions();
+                break;
+            case '3':
+                cout << "Exiting the game. Goodbye!" << endl;
+                break;
+            default:
+                cout << "Invalid choice. Please try again." << endl;
+                break;
+        }
+    } while (menuChoice != '3');
 }
 
-  
+ 
 int main()
 {
-    //Number_Guessing_game();
-    //Rock_Paper_Scissors_Game();
-    ticTacToeGame();
-}6
+    
+    Tic_Tac_Toe_Game();2
+}
